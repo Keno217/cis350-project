@@ -6,7 +6,11 @@ The purpose of this app is twofold:
 ## 2 Introduction
 ## 3 Architectural Design
 ### 3.1 Class Diagram
+![class diagram](class-diagram.png)
 ### 3.2 Sequence Diagram
+![sequence diagram](sequence-diagram.png)
+### 3.3 Usecase Diagram
+![usecase diagram](usecase-diagram.png)
 ## 4 User Guide/Implementation
 ## 5 Future Scope
 ## 6 Conclusion
