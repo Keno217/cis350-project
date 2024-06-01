@@ -27,9 +27,9 @@ Users will need to install the application "TBD" onto an Android device.  An ico
 #### 4.1.2 Landing Page
 Upon opening the application, the user is greeted to an input query in which they can provide the times for the start and end of their last sleep cycle.  The graph top and center is there to help as a visual indicator of how much sleep was had, with each tick representing a half an hour.  Additionally feedback on the total amount of sleep they experienced and the average amount of sleep they get each night will be returned given the timeframe of one week prior.  Three icons will line the bottom of the screen that will help navigate to a more in depth statistics page, navigate a settings page, or reload a new fun fact that will be placed on the landing page.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="LandingPage.png" alt="sequence diagram" width="416" height="739">
-</div>
+</p>
 
 #### 4.1.3 Statistics Page
 Upon navigation to the statistics page, the user is greeted with a larger sample size of data given within the span of the previous month.
