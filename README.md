@@ -1,5 +1,5 @@
 # Sleep Tracker & Calculator
-#### [JIRA](https://mail-team-xsccm6lw.atlassian.net/jira/software/projects/SCRUM)
+#### [JIRA](https://mail-team-xsccm6lw.atlassian.net/jira/software/projects/SCRUM/boards/1)
 ## 1 Abstract
 The purpose of this app is twofold:
 1. Help users track their sleep so that they can understand when and for how long they sleep. Tracking this information will help users to understand trends in their sleep schedule, duration, and quality.
