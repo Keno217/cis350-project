@@ -11,7 +11,9 @@ Have you ever laid in bed, eyes closed, but feel wide awake? That is the case fo
 ## 3 Architectural Design
 Our software is designed to use a client-server architecture. The client is in the form of an interactive app where the user can enter their sleep information and request good times to wake up/fall asleep. The server, using node, will process the sleep calculations and send sleep tracking information to and from mongoDB. So when the client requests sleep tracking data from the server, the server then gets that from the database and responds with both those records and an analysis of that data. Similarly, when the client requests the best time to wake up/fall asleep, the server performs that requisite calculations and responds with the results.
 
-![architecture](architecture.png)
+<p align="center">
+  <img src="architecture.png" alt="sequence diagram">
+</p>
 
 ### 3.1 Class Diagram
 This portion contains diagrams for the design of our software. Consisting of one boundary class, two control classes, and two entity classes, below we have a visual representation of the flow of data and interactions within the system.
