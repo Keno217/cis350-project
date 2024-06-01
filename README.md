@@ -9,6 +9,7 @@ Have you ever laid in bed, eyes closed, but feel wide awake? That is the case fo
 ## 3 Architectural Design
 ### 3.1 Class Diagram
 This portion contains diagrams for the design of our software. Consisting of one boundary class, two control classes, and two entity classes, below we have a visual representation of the flow of data and interactions within the system.
+
 ![sequence diagram](classdiagram.png)
 
 ### 3.2 Sequence Diagram
