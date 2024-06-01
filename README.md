@@ -34,9 +34,9 @@ Upon opening the application, the user is greeted to an input query in which the
 #### 4.1.3 Statistics Page
 Upon navigation to the statistics page, the user is greeted with a larger sample size of data given within the span of the previous month.
 
-<div style="text-align: center;">
+<p align="center">
   <img src="StatsPage.png" alt="sequence diagram" width="416" height="739">
-</div>
+</p>
 
 ## 5 Future Scope
 ## 6 Conclusion
