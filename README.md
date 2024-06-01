@@ -21,6 +21,19 @@ The usecase diagram shows how the user may interact with the system.
 ![usecase diagram](usecase-diagram.png)
 
 ## 4 User Guide/Implementation
+### 4.1 Client Side
+#### 4.1.1 Installing the Application
+Users will need to install the application "TBD" onto an Android device.  An icon representative of the app will then be added to the home screen of the user's device.
+#### 4.1.2 Landing Page
+Upon opening the application, the user is greeted to an input query in which they can provide the times for the start and end of their last sleep cycle.  The graph top and center is there to help as a visual indicator of how much sleep was had, with each tick representing a half an hour.  Additionally feedback on the total amount of sleep they experienced and the average amount of sleep they get each night will be returned given the timeframe of one week prior.  Three icons will line the bottom of the screen that will help navigate to a more in depth statistics page, navigate a settings page, or reload a new fun fact that will be placed on the landing page.
+
+![sequence diagram](LandingPage.png)
+
+#### 4.1.3 Statistics Page
+Upon navigation to the statistics page, the user is greeted with a larger sample size of data given within the span of the previous month.
+
+![sequence diagram](StatsPage.png)
+
 ## 5 Future Scope
 ## 6 Conclusion
 Our Sleep Tracker & Calculator app aims to encourage users to take control of their sleep habits and improve their quality of life. By providing insight, this app has the potential to change the way how people approach sleep. As we continue to refine and enhance this project, the team is excited to help you on your journey.
