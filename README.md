@@ -19,6 +19,7 @@ The sequence diagram shows the flow of data through the system, and how the intr
 
 ### 3.3 Usecase Diagram
 The usecase diagram shows how the user may interact with the system.
+
 ![usecase diagram](usecase-diagram.png)
 
 ## 4 User Guide/Implementation
