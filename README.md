@@ -47,6 +47,8 @@ Upon navigation to the statistics page, the user is greeted with a larger sample
 </p>
 
 ## 5 Future Scope
+There are several possibilities for the future scope of this project. Currently this software provides an estimate of the best time to wake up/fall asleep but doesn't do much beyond that simple calculation. In the future we may expand this so that it can act as an alarm clock or tailor the calculations for the specific user and their sleep patterns. The sleep tracking portion may also provide more detailed analysis of the user's sleep patterns and how they've changed over time.
+
 ## 6 Conclusion
 Our Sleep Tracker & Calculator app aims to encourage users to take control of their sleep habits and improve their quality of life. By providing insight, this app has the potential to change the way how people approach sleep. As we continue to refine and enhance this project, the team is excited to help you on your journey.
 
