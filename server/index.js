@@ -29,9 +29,15 @@ app.get('/getUser', (req, res) => {
 
 app.post('/createUser', async (req, res) => {
     const user = req.body;
-    const newUser = new UsersModel(user);
-    await newUser.save();
-    res.json(user);
+    UsersModel.find({name: user.name}).then ( async (data) => {
+        if (!data.length) {
+            const newUser = new UsersModel(user);
+            await newUser.save();
+            res.json(newUser);
+        } else {
+            res.json(data[0]);
+        }
+    });
 });
 
 app.get('/getRecords', (req, res) => {
