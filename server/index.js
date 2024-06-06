@@ -53,3 +53,28 @@ app.post('/createRecord', async (req, res) => {
     await newRecord.save();
     res.json(record);
 });
+
+app.get('/getSleepStats', (req, res) => {
+    const user = req.body;
+    RecordsModel.find({user: user.user}).then ( data => {
+        var dateMap = {};
+        var totalSleepDuration = 0;
+        data.forEach(record => {
+            var start = new Date(record.start_time);
+            var end = new Date(record.end_time);
+            var date = start.toLocaleDateString();
+            var duration = end - start; // measured in milliseconds
+
+            dateMap[date] = (dateMap[date] || 0) + (end - start);
+            totalSleepDuration += duration;
+        });
+
+        var numDays = Object.keys(dateMap).length;
+        var averageSleepDuration = totalSleepDuration / numDays;
+
+        res.json({
+            dates: dateMap,
+            average: averageSleepDuration,
+        });
+    });
+})
