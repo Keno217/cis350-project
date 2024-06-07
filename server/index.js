@@ -1,6 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+//load .env file
+require('dotenv').config();
 
 const app = express();
 const UsersModel = require('./models/Users');
@@ -15,9 +20,16 @@ if (!process.env.DATABASE_URL) {
 }
 
 mongoose.connect(process.env.DATABASE_URL)
+.then(() => {
+    console.log('Connected to MongoDB');
+})
+.catch(err => {
+    console.error('Failed to connect to MongoDB:', err);
+});
 
-app.listen(3001, () => {
-    console.log('Server is running...');
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log('Server is running...\nport: ' + PORT);
 });
 
 app.get('/getUser', (req, res) => {
