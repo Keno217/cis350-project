@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sleepapp/pages/LandingPage.dart';
 import 'package:sleepapp/pages/register.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class createAccount extends StatelessWidget {
   const createAccount({Key? key}) : super(key: key);
@@ -71,12 +74,18 @@ class createAccount extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // handle account creation later
                             String username = _usernameController.text;
                             String password = _passwordController.text;
                             print('Username: $username');
                             print('Password: $password');
+                            await createUser(username, password);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LandingPage()),
+                            );
                           },
                           child: Text('Create Account',
                               style: TextStyle(color: Colors.cyan)),
@@ -114,4 +123,18 @@ class createAccount extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<http.Response> createUser(String name, String pass) {
+  String server = 'http://129.80.148.244:3001';
+
+  return http.post(
+    Uri.parse('$server/createUser'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'name': name,
+    }),
+  );
 }

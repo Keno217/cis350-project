@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'createaccount.dart';
+import 'package:sleepapp/pages/LandingPage.dart';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
@@ -47,12 +48,18 @@ class Register extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Handle login later
                             String username = _usernameController.text;
                             String password = _passwordController.text;
                             print('Username: $username');
                             print('Password: $password');
+                            await createUser(username, password);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LandingPage()),
+                            );
                           },
                           child: Text('Sign In',
                               style: TextStyle(color: Colors.cyan)),
