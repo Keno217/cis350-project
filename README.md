@@ -30,6 +30,9 @@ The usecase diagram shows how the user may interact with the system.
 
 ![usecase diagram](images/usecase-diagram.png)
 
+### 3.4 Communication Diagram
+![communication diagram](images/communication-diagram.png)
+
 ## 4 User Guide/Implementation
 ### 4.1 Client Side
 #### 4.1.1 Installing the Application
