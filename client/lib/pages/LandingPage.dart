@@ -4,7 +4,7 @@ class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
 
   @override
-  State<LandingPage> createState() => _LandingPageState(); 
+  State<LandingPage> createState() => _LandingPageState();
 }
 
 class _LandingPageState extends State<LandingPage> {
@@ -13,7 +13,7 @@ class _LandingPageState extends State<LandingPage> {
 
   String averageSleep = "7:15 Hours";
   String totalSleep = "21:45 / 24:00 Hours";
-  
+
   String funFactLine1 = "Counting sheep works";
   String funFactLine2 = "becuase sheep sounds like sleep!";
 
@@ -21,111 +21,105 @@ class _LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[900],
-
       body: Column(children: [
-        
         //Average Sleep
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          alignment : Alignment.center,
-          height : 90,
-          
-          child : Row( children: [
-            const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Average Sleep : ", style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(averageSleep, style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-          
-          ])
-        ),
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+            height: 100,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Average Sleep : ",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    averageSleep,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+            ])),
 
         //Total Sleep
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          alignment : Alignment.center,
-          height : 90,
-          
-          child : Row( children: [
-            const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Total Sleep : ", style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(totalSleep, style:  const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-          
-          ])
-        ),
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+            height: 100,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Total Sleep : ",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    totalSleep,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+            ])),
 
         //Start Time
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          alignment : Alignment.center,
-          height : 100,
-          
-          child : Row( children: [
-            const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Start Time : ", style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-
-            Column(
-              children : [
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+            height: 100,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Start Time : ",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+              Column(children: [
                 Container(
-                  child: DropdownButton<String>(
-                    value: startValue,
-                    style: const TextStyle(fontSize: 26, color: Colors.blue),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.blue,
-                    ),
-                    onChanged: (String? newValue){
-                      setState(() {
-                      startValue = newValue!;
-                      });
-                    },
-              
-                    items : const [
+                    child: DropdownButton<String>(
+                        value: startValue,
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.blue),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.blue,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            startValue = newValue!;
+                          });
+                        },
+                        items: const [
                       DropdownMenuItem<String>(
-                      value: "0",
-                      child: Text("00:00"),
+                        value: "0",
+                        child: Text("00:00"),
                       ),
                       DropdownMenuItem<String>(
                         value: "30",
@@ -315,53 +309,46 @@ class _LandingPageState extends State<LandingPage> {
                         value: "1410",
                         child: Text("23:30"),
                       ),
-                    ]
-                  )
-                )
-              ]
-            ),
-          
-          ])
-        ),
+                    ]))
+              ]),
+            ])),
 
         //End time
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          alignment : Alignment.center,
-          height : 100,
-          
-          child : Row( children: [
-            const Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("End Time : ", style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-
-            Column(
-              children : [
+        Container(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+            height: 100,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "End Time : ",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+              Column(children: [
                 Container(
-                  child: DropdownButton<String>(
-                    value: endValue,
-                    style: const TextStyle(fontSize: 26, color: Colors.blue),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.blue,
-                    ),
-                    onChanged: (String? newValue){
-                      setState(() {
-                      endValue = newValue!;
-                      });
-                    },
-              
-                    items : const [
+                    child: DropdownButton<String>(
+                        value: endValue,
+                        style:
+                            const TextStyle(fontSize: 24, color: Colors.blue),
+                        underline: Container(
+                          height: 2,
+                          color: Colors.blue,
+                        ),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            endValue = newValue!;
+                          });
+                        },
+                        items: const [
                       DropdownMenuItem<String>(
-                      value: "0",
-                      child: Text("00:00"),
+                        value: "0",
+                        child: Text("00:00"),
                       ),
                       DropdownMenuItem<String>(
                         value: "30",
@@ -551,153 +538,125 @@ class _LandingPageState extends State<LandingPage> {
                         value: "1410",
                         child: Text("23:30"),
                       ),
-                    ]
-                  )
-                )
-              ]
-            ),
-          
-          ])
-        ),
+                    ]))
+              ]),
+            ])),
 
         //Fun Facts
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-          alignment : Alignment.center,
-          height : 40,
-          
-          child : const Row( children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Fun Fact", style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-          
-          ])
-        ),
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-          alignment : Alignment.center,
-          height : 40,
-          
-          child : Row( children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(funFactLine1, style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-          
-          ])
-        ),
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-          alignment : Alignment.center,
-          height : 40,
-          
-          child : Row( children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(funFactLine2, style: const TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue),
-                ),
-              ],
-            ),
-          
-          ])
-        ),
+        Container(
+            height: 40,
+            child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Fun Fact",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.blue),
+                      ),
+                    ],
+                  ),
+                ])),
+        Container(
+            height: 40,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    funFactLine1,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+            ])),
+        Container(
+            height: 40,
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    funFactLine2,
+                    style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue),
+                  ),
+                ],
+              ),
+            ])),
 
         //Widgets
-        Container (
-          padding : const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
-          alignment: Alignment.center,
-          height: 110,
-          
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  Container(
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
+          height: 150,
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Column(
+              children: [
+                Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       color: Colors.white.withOpacity(0.1),
                     ),
-                    child : IconButton (
-                      icon : const Icon(
+                    child: IconButton(
+                      icon: const Icon(
                         Icons.timeline,
-                        size : 36,
-                        color : Colors.blue,
+                        size: 36,
+                        color: Colors.blue,
                       ),
-                      onPressed: () {},
-                    )
-                  )
-                ],
-              ),
-              
-              Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    child : IconButton (
-                      icon : const Icon(
-                        Icons.lightbulb,
-                        size : 36,
-                        color : Colors.blue,
-                      ),
-                      onPressed: () {},
-                    )
-                  )
-                ],
-              ),
-
-              Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white.withOpacity(0.1),
-                    ),
-                    child : IconButton (
-                      icon : const Icon(
-                        Icons.settings,
-                        size : 36,
-                        color : Colors.blue,
-                      ),
-                      onPressed: () {},
-                    )
-                  )
-                ],
-              ),
-
-            ]
-          ),
-          
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/stats');
+                      },
+                    ))
+              ],
+            ),
+            // Column(
+            //   children: [
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(15),
+            //         color: Colors.white.withOpacity(0.1),
+            //       ),
+            //       child : IconButton (
+            //         icon : const Icon(
+            //           Icons.lightbulb,
+            //           size : 36,
+            //           color : Colors.blue,
+            //         ),
+            //         onPressed: () {},
+            //       )
+            //     )
+            //   ],
+            // ),
+            // Column(
+            //   children: [
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.circular(15),
+            //         color: Colors.white.withOpacity(0.1),
+            //       ),
+            //       child : IconButton (
+            //         icon : const Icon(
+            //           Icons.settings,
+            //           size : 36,
+            //           color : Colors.blue,
+            //         ),
+            //         onPressed: () {},
+            //       )
+            //     )
+            //   ],
+            // ),
+          ]),
         ),
-
-
-
-
-
-
-
-
-
-
       ]),
     );
   }

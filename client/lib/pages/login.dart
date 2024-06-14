@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sleepapp/pages/LandingPage.dart';
 import 'package:sleepapp/pages/register.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:sleepapp/pages/LandingPage.dart';
 
-class createAccount extends StatelessWidget {
-  const createAccount({Key? key}) : super(key: key);
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,36 +24,12 @@ class createAccount extends StatelessWidget {
                 children: <Widget>[
                   Align(
                     alignment: Alignment(0, -0.5),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            'Create your account',
-                            style: TextStyle(
-                              fontSize: 36,
-                              color: Colors.cyan,
-                            ),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        SizedBox(
-                            height:
-                                0), // Reduced height to bring the text closer
-                        Center(
-                          child: Text(
-                            'Create an account to make and view your sleep entries.',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 48,
+                        color: Colors.cyan,
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -75,7 +49,7 @@ class createAccount extends StatelessWidget {
                         SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
-                            // handle account creation later
+                            // Handle login later
                             String username = _usernameController.text;
                             String password = _passwordController.text;
                             print('Username: $username');
@@ -87,7 +61,7 @@ class createAccount extends StatelessWidget {
                                   builder: (context) => LandingPage()),
                             );
                           },
-                          child: Text('Create Account',
+                          child: Text('Sign In',
                               style: TextStyle(color: Colors.cyan)),
                         ),
                       ],
@@ -109,7 +83,7 @@ class createAccount extends StatelessWidget {
                   );
                 },
                 child: Text(
-                  "Go back to Login",
+                  "Don't have an account? Create one",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.blue,
@@ -123,18 +97,4 @@ class createAccount extends StatelessWidget {
       ),
     );
   }
-}
-
-Future<http.Response> createUser(String name, String pass) {
-  String server = 'http://129.80.148.244:3001';
-
-  return http.post(
-    Uri.parse('$server/createUser'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-    body: jsonEncode(<String, String>{
-      'name': name,
-    }),
-  );
 }

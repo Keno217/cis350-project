@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'createaccount.dart';
 import 'package:sleepapp/pages/LandingPage.dart';
+import 'package:sleepapp/pages/login.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Register extends StatelessWidget {
   const Register({Key? key}) : super(key: key);
@@ -24,12 +26,36 @@ class Register extends StatelessWidget {
                 children: <Widget>[
                   Align(
                     alignment: Alignment(0, -0.5),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 48,
-                        color: Colors.cyan,
-                      ),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            'Create your account',
+                            style: TextStyle(
+                              fontSize: 36,
+                              color: Colors.cyan,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        SizedBox(
+                            height:
+                                0), // Reduced height to bring the text closer
+                        Center(
+                          child: Text(
+                            'Create an account to make and view your sleep entries.',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.center,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
@@ -49,7 +75,7 @@ class Register extends StatelessWidget {
                         SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
-                            // Handle login later
+                            // handle account creation later
                             String username = _usernameController.text;
                             String password = _passwordController.text;
                             print('Username: $username');
@@ -61,7 +87,7 @@ class Register extends StatelessWidget {
                                   builder: (context) => LandingPage()),
                             );
                           },
-                          child: Text('Sign In',
+                          child: Text('Create Account',
                               style: TextStyle(color: Colors.cyan)),
                         ),
                       ],
@@ -79,11 +105,11 @@ class Register extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => createAccount()),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
                 child: Text(
-                  "Don't have an account? Create one",
+                  "Go back to Login",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.blue,
@@ -97,4 +123,18 @@ class Register extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<http.Response> createUser(String name, String pass) {
+  String server = 'http://129.80.148.244:3001';
+
+  return http.post(
+    Uri.parse('$server/createUser'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{
+      'name': name,
+    }),
+  );
 }
