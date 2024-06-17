@@ -39,18 +39,42 @@ app.get('/getUser', (req, res) => {
     });
 });
 
-app.post('/createUser', async (req, res) => {
-    const user = req.body;
-    UsersModel.find({name: user.name}).then ( async (data) => {
-        if (!data.length) {
-            const newUser = new UsersModel(user);
-            await newUser.save();
-            res.json(newUser);
-        } else {
-            res.json(data[0]);
-        }
-    });
+
+app.post('/loginUser', async (req, res) => {
+    const { user, pass } = req.body;
+    const client = await UsersModel.findOne({ username: user });
+
+    if (!client) {
+        return res.status(404).json({ message: 'User not found'});
+    }
+
+    const isPasswordValid = await bcrypt.compare(pass, client.password);
+
+    if (!isPasswordValid) {
+        return res.status(401).json({ message: 'Invalid credentials.' });
+    }
+
+    return res.status(200).json({ message: 'Login successful.' });
 });
+
+app.post('/createUser', async (req, res) => {
+    const { user, pass } = req.body;
+
+    const existingUser = await UsersModel.findOne({ username: user });
+
+    if (existingUser) {
+        return res.status(409).json({ error: 'User already exists.' });
+    }
+
+    const salt = await bcrypt.genSalt(15);
+    const hashedPassword = await bcrypt.hash(pass, salt);
+
+    const newUser = new UsersModel({username: user, password: hashedPassword});
+    await newUser.save();
+
+    return res.status(201).json({ message: 'User created successfully.'});
+});
+
 
 app.get('/getRecords', (req, res) => {
     const user = req.body;

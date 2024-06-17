@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sleepapp/pages/LandingPage.dart';
 import 'package:sleepapp/pages/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -83,8 +82,7 @@ class Register extends StatelessWidget {
                             await createUser(username, password);
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => LandingPage()),
+                              MaterialPageRoute(builder: (context) => Login()),
                             );
                           },
                           child: Text('Create Account',
@@ -125,7 +123,7 @@ class Register extends StatelessWidget {
   }
 }
 
-Future<http.Response> createUser(String name, String pass) {
+Future<http.Response> createUser(String username, String password) {
   String server = 'http://129.80.148.244:3001';
 
   return http.post(
@@ -134,7 +132,8 @@ Future<http.Response> createUser(String name, String pass) {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'name': name,
+      'username': username,
+      'password': password,
     }),
   );
 }
