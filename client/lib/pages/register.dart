@@ -132,8 +132,8 @@ Future<http.Response> createUser(String username, String password) {
       'Content-Type': 'application/json; charset=UTF-8',
     },
     body: jsonEncode(<String, String>{
-      'username': username,
-      'password': password,
+      'user': username,
+      'pass': password,
     }),
   );
 }

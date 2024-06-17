@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> loginUser(String username, String password) async {
-    String server = 'http://192.168.1.5:3001';
+    String server = 'http://129.80.148.244:3001';
 
     var response = await http.post(
       Uri.parse('$server/loginUser'),
@@ -31,8 +31,8 @@ class _LoginState extends State<Login> {
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
+        'user': username,
+        'pass': password,
       }),
     );
 
