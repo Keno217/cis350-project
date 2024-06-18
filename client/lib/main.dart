@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         home: Login(),
         //routing list of pages.  just add another line for different pages
         routes: {
-          '/register': (context) => const Register(),
+          '/register': (context) => Register(),
           '/login': (context) => const Login(),
           '/landing': (context) => const LandingPage(),
           '/stats': (context) => const StatisticsPage(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sleepapp/pages/login.dart';
+import 'package:sleepapp/global.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);

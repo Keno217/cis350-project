@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sleepapp/pages/LandingPage.dart';
 import 'package:sleepapp/pages/register.dart';
+import 'package:sleepapp/global.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -23,6 +24,15 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> loginUser(String username, String password) async {
+    if (username.isEmpty) {
+      _showErrorMessage('Username must be at least 1 character');
+      return;
+    }
+    if (password.length < 3) {
+      _showErrorMessage('Password must be at least 3 characters');
+      return;
+    }
+
     String server = 'http://129.80.148.244:3001';
 
     var response = await http.post(
@@ -37,14 +47,20 @@ class _LoginState extends State<Login> {
     );
 
     if (response.statusCode == 200) {
+      _showErrorMessage('Login Successful.');
+      globalUsername = username;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => LandingPage()),
       );
     } else {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => LandingPage()));
+      _showErrorMessage('Invalid Credentials.');
     }
+  }
+
+  void _showErrorMessage(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
