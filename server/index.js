@@ -89,6 +89,10 @@ app.post('/createRecord', async (req, res) => {
     record.day = today.getDate();
     record.month = today.getMonth() + 1; // Date uses 0-indexed months so we add 1
     record.year = today.getFullYear();
+
+    // delete record(s) for the same day
+    await RecordsModel.deleteMany({day: record.day, month: record.month, year: record.year});
+
     const newRecord = new RecordsModel(record);
     await newRecord.save();
     res.json(record);
