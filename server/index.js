@@ -84,7 +84,11 @@ app.get('/getRecords', (req, res) => {
 });
 
 app.post('/createRecord', async (req, res) => {
-    const record = req.body;
+    var record = req.body;
+    var today = new Date();
+    record.day = today.getDate();
+    record.month = today.getMonth() + 1; // Date uses 0-indexed months so we add 1
+    record.year = today.getFullYear();
     const newRecord = new RecordsModel(record);
     await newRecord.save();
     res.json(record);
@@ -96,10 +100,10 @@ app.get('/getSleepStats', (req, res) => {
         var dateMap = {};
         var totalSleepDuration = 0;
         data.forEach(record => {
-            var start = new Date(record.start_time);
-            var end = new Date(record.end_time);
-            var date = start.toLocaleDateString();
-            var duration = end - start; // measured in milliseconds
+            var start = record.start_time
+            var end = record.end_time;
+            var date = `${record.year}/${record.month}/${record.day}`;
+            var duration = end - start; // measured in minutes
 
             dateMap[date] = (dateMap[date] || 0) + (end - start);
             totalSleepDuration += duration;

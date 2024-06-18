@@ -12,13 +12,25 @@ const RecordsSchema = new mongoose.Schema({
         required: true,
     },
     start_time: {
-        type: String,
+        type: Number,
         required: true,
     },
     end_time: {
-        type: String,
+        type: Number,
         required: true,
     },
+    day: { // day of the month 1-31
+        type: Number,
+        required: true,
+    },
+    month: { // month 1-12
+        type: Number,
+        required: true,
+    },
+    year: {
+        type: Number,
+        required: true,
+    }
 });
 
 const RecordsModel = mongoose.model("records", RecordsSchema);
