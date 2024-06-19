@@ -1,1 +1,1 @@
-String? globalUsername;
+String globalUsername = '';

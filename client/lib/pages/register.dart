@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sleepapp/pages/login.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -127,10 +126,7 @@ class Register extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
+                  Navigator.pushNamed(context, '/login');
                 },
                 child: Text(
                   "Go back to Login",
@@ -168,10 +164,7 @@ Future<int> createUser(
   );
 
   if (response.statusCode == 201) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Login()),
-    );
+    Navigator.pushNamed(context, '/login');
     return 1;
   }
 

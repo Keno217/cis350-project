@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sleepapp/pages/LandingPage.dart';
-import 'package:sleepapp/pages/register.dart';
 import 'package:sleepapp/global.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -49,10 +47,7 @@ class _LoginState extends State<Login> {
     if (response.statusCode == 200) {
       _showErrorMessage('Login Successful.');
       globalUsername = username;
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LandingPage()),
-      );
+      Navigator.pushNamed(context, '/landing');
     } else {
       _showErrorMessage('Invalid Credentials.');
     }
@@ -125,10 +120,7 @@ class _LoginState extends State<Login> {
               padding: const EdgeInsets.all(16.0),
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Register()),
-                  );
+                  Navigator.pushNamed(context, '/register');
                 },
                 child: Text(
                   "Don't have an account? Create one",
