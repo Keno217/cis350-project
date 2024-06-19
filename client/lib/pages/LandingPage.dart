@@ -35,6 +35,7 @@ class _LandingPageState extends State<LandingPage> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pushNamed(context, '/login');
+            showMessage('Successfully logged out');
           },
         ),
       ),
@@ -212,6 +213,7 @@ class _LandingPageState extends State<LandingPage> {
                       if (startValue != endValue) {
                         print("$startValue and $endValue and $globalUsername");
                         createEntry(globalUsername, startValue, endValue);
+                        showMessage('Sleep log added!');
                         // handle later
                         return;
                       }
@@ -259,6 +261,15 @@ class _LandingPageState extends State<LandingPage> {
     );
   }
 
+  void showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
   // function to build dropdown menu items
   List<DropdownMenuItem<String>> buildDropdownMenuItems() {
     List<DropdownMenuItem<String>> items = [];
@@ -276,10 +287,10 @@ class _LandingPageState extends State<LandingPage> {
     return items;
   }
 
-  Future<int> createEntry(String username, startTime, endTime) async {
+  Future<http.Response> createEntry(String username, startTime, endTime) async {
     String server = 'http://129.80.148.244:3001';
 
-    var response = await http.post(
+    return await http.post(
       Uri.parse('$server/createRecord'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -292,7 +303,5 @@ class _LandingPageState extends State<LandingPage> {
         },
       ),
     );
-
-    return 0;
   }
 }

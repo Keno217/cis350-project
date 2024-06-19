@@ -20,12 +20,12 @@ if (!process.env.DATABASE_URL) {
 }
 
 mongoose.connect(process.env.DATABASE_URL)
-.then(() => {
-    console.log('Connected to MongoDB');
-})
-.catch(err => {
-    console.error('Failed to connect to MongoDB:', err);
-});
+    .then(() => {
+        console.log('Connected to MongoDB');
+    })
+    .catch(err => {
+        console.error('Failed to connect to MongoDB:', err);
+    });
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
@@ -34,7 +34,7 @@ app.listen(PORT, () => {
 
 app.get('/getUser', (req, res) => {
     const user = req.body;
-    UsersModel.find({name: user.name}).then ( data => {
+    UsersModel.find({ name: user.name }).then(data => {
         res.json(data);
     });
 });
@@ -45,7 +45,7 @@ app.post('/loginUser', async (req, res) => {
     const client = await UsersModel.findOne({ username: user });
 
     if (!client) {
-        return res.status(404).json({ message: 'User not found'});
+        return res.status(404).json({ message: 'User not found' });
     }
 
     const isPasswordValid = await bcrypt.compare(pass, client.password);
@@ -69,16 +69,16 @@ app.post('/createUser', async (req, res) => {
     const salt = await bcrypt.genSalt(15);
     const hashedPassword = await bcrypt.hash(pass, salt);
 
-    const newUser = new UsersModel({username: user, password: hashedPassword});
+    const newUser = new UsersModel({ username: user, password: hashedPassword });
     await newUser.save();
 
-    return res.status(201).json({ message: 'User created successfully.'});
+    return res.status(201).json({ message: 'User created successfully.' });
 });
 
 
 app.get('/getRecords', (req, res) => {
     const user = req.body;
-    RecordsModel.find({user: user.user}).then ( data => {
+    RecordsModel.find({ user: user.user }).then(data => {
         res.json(data);
     });
 });
@@ -91,23 +91,24 @@ app.post('/createRecord', async (req, res) => {
     record.year = today.getFullYear();
 
     // delete record(s) for the same day
-    await RecordsModel.deleteMany({day: record.day, month: record.month, year: record.year});
+    await RecordsModel.deleteMany({user: record.user, day: record.day, month: record.month, year: record.year});
 
     const newRecord = new RecordsModel(record);
     await newRecord.save();
     res.json(record);
 });
 
-app.get('/getSleepStats', (req, res) => {
+app.post('/getSleepStats', (req, res) => {
     const user = req.body;
-    RecordsModel.find({user: user.user}).then ( data => {
+
+    RecordsModel.find({ user: user.user }).then(data => {
         var dateMap = {};
         var totalSleepDuration = 0;
         data.forEach(record => {
-            var start = record.start_time
-            var end = record.end_time;
-            var date = `${record.year}/${record.month}/${record.day}`;
-            var duration = end - start; // measured in minutes
+            var start = new Date(record.start_time);
+            var end = new Date(record.end_time);
+            var date = start.toLocaleDateString();
+            var duration = end - start; 
 
             dateMap[date] = (dateMap[date] || 0) + (end - start);
             totalSleepDuration += duration;

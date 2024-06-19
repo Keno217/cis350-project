@@ -26,6 +26,12 @@ class _LoginState extends State<Login> {
       _showErrorMessage('Username must be at least 1 character');
       return;
     }
+
+    if (username.length > 12) {
+      _showErrorMessage('Username must be less than 12 characters');
+      return;
+    }
+
     if (password.length < 3) {
       _showErrorMessage('Password must be at least 3 characters');
       return;

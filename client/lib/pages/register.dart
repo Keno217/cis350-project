@@ -85,9 +85,22 @@ class Register extends StatelessWidget {
                                   'Username must be at least 1 character');
                               return;
                             }
+
+                            if (username.length > 12) {
+                              _showErrorMessage(context,
+                                  'Username must be less than 12 characters');
+                              return;
+                            }
+
                             if (password.length < 3) {
                               _showErrorMessage(context,
                                   'Password must be at least 3 characters');
+                              return;
+                            }
+
+                            if (password.length > 12) {
+                              _showErrorMessage(context,
+                                  'Password must be less than 12 characters');
                               return;
                             }
 
