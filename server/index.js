@@ -130,7 +130,7 @@ app.post('/getSleepStats', (req, res) => {
                 res.status(200).json({
                     success: true,
                     records: formattedData,
-                    duration: weeklyDuration
+                    durations: weeklyDuration
                 });
             })
                 .catch(err => {
