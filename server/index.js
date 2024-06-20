@@ -110,17 +110,20 @@ app.post('/getSleepStats', (req, res) => {
     const endOfWeek = new Date(weekAgo);
     endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay()));
 
-    RecordsModel.find({ user: user.user, date: { $gte: startOfWeek, $lte: endOfWeek } })
-        .sort({ date: -1 })
+    RecordsModel.find({ user: user.user, day: { $gte: startOfWeek, $lte: endOfWeek }, month: startOfWeek.getMonth() + 1, year: startOfWeek.getFullYear })
+        .sort({ year: -1, month: -1, day: -1 })
         .then(data => {
-            let weeklyDuration = data.map(record => {
-                var duration = Math.abs(record.end_time - record.start_time);
-                duration = duration / 60;
-                return duration;
+            let weeklyDuration = new Array(7).fill(0.0);
+
+            data.forEach(record => {
+                const date = new Date(record.year, record.month - 1, record.day)
+                const dayIndex = date.getDay(); // sunday (0) - saturday (6)
+                const duration = Math.abs(record.end_time - record.start_time) / 60;
+                weeklyDuration[dayIndex] = duration;
             });
 
             RecordsModel.find({ user: user.user }).then(data => {
-                
+
                 let formattedData = data.map(record => {
                     // calculate duration and format date
                     const duration = Math.abs(record.end_time - record.start_time)
