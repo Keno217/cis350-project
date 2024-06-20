@@ -106,7 +106,7 @@ app.post('/getSleepStats', (req, res) => {
         .limit(7)
         .then(data => {
             let weeklyDuration = data.map(record => {
-                const duration = Math.abs(record.end_time - record.start_time);
+                var duration = Math.abs(record.end_time - record.start_time);
                 duration = duration / 60;
                 return duration;
             });
