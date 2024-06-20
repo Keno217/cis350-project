@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Register extends StatelessWidget {
-  Register({Key? key}) : super(key: key);
+  Register({super.key});
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -29,7 +29,7 @@ class Register extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Align(
+                  const Align(
                     alignment: Alignment(0, -0.5),
                     child: Column(
                       children: [
@@ -61,21 +61,23 @@ class Register extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: [
                         TextField(
                           controller: _usernameController,
-                          decoration: InputDecoration(labelText: 'Username'),
+                          decoration:
+                              const InputDecoration(labelText: 'Username'),
                         ),
                         TextField(
                           controller: _passwordController,
-                          decoration: InputDecoration(labelText: 'Password'),
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
                           obscureText: true,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
                             // account creation
@@ -124,7 +126,7 @@ class Register extends StatelessWidget {
                               return;
                             }
                           },
-                          child: Text('Create Account',
+                          child: const Text('Create Account',
                               style: TextStyle(color: Colors.cyan)),
                         ),
                       ],
@@ -142,7 +144,7 @@ class Register extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/login');
                 },
-                child: Text(
+                child: const Text(
                   "Go back to Login",
                   style: TextStyle(
                     fontSize: 14,

@@ -1,4 +1,4 @@
-import 'package:sleepapp/barGraph/IndividualBar.dart';
+import 'package:sleepapp/barGraph/individual_bar.dart';
 
 class BarData {
   final double sunData;

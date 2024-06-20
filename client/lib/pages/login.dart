@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+  const Login({super.key});
 
   @override
   _LoginState createState() => _LoginState();
@@ -80,7 +80,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Align(
+                  const Align(
                     alignment: Alignment(0, -0.5),
                     child: Text(
                       'Login',
@@ -90,28 +90,30 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
                       children: [
                         TextField(
                           controller: _usernameController,
-                          decoration: InputDecoration(labelText: 'Username'),
+                          decoration:
+                              const InputDecoration(labelText: 'Username'),
                         ),
                         TextField(
                           controller: _passwordController,
-                          decoration: InputDecoration(labelText: 'Password'),
+                          decoration:
+                              const InputDecoration(labelText: 'Password'),
                           obscureText: true,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         ElevatedButton(
                           onPressed: () async {
                             String username = _usernameController.text;
                             String password = _passwordController.text;
                             await loginUser(username, password);
                           },
-                          child: Text('Sign In',
+                          child: const Text('Sign In',
                               style: TextStyle(color: Colors.cyan)),
                         ),
                       ],
@@ -129,7 +131,7 @@ class _LoginState extends State<Login> {
                 onPressed: () {
                   Navigator.pushNamed(context, '/register');
                 },
-                child: Text(
+                child: const Text(
                   "Don't have an account? Create one",
                   style: TextStyle(
                     fontSize: 14,

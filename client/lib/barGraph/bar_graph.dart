@@ -1,15 +1,15 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:sleepapp/barGraph/BarData.dart';
+import 'package:sleepapp/barGraph/bar_data.dart';
 
-class barGraph extends StatelessWidget {
+class BarGraph extends StatelessWidget {
   final List barWeek;
-  const barGraph({super.key, required this.barWeek});
+  const BarGraph({super.key, required this.barWeek});
 
   @override
   Widget build(BuildContext context) {
     BarData data = BarData(
-        sunData: barWeek.length >= 1 ? barWeek[0] : 0,
+        sunData: barWeek.isNotEmpty ? barWeek[0] : 0,
         monData: barWeek.length >= 2 ? barWeek[1] : 0,
         tueData: barWeek.length >= 3 ? barWeek[2] : 0,
         wedData: barWeek.length >= 4 ? barWeek[3] : 0,
@@ -45,8 +45,8 @@ class barGraph extends StatelessWidget {
   }
 }
 
-class style {
-  const style();
+class Style {
+  const Style();
 }
 
 Widget getBottomTiles(double value, TitleMeta meta) {

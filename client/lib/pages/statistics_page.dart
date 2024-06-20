@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sleepapp/global.dart';
-import 'package:sleepapp/barGraph/BarGraph.dart'; // Assuming you have a BarGraph widget
+import 'package:sleepapp/barGraph/bar_graph.dart'; // Assuming you have a BarGraph widget
 
 class StatisticsPage extends StatefulWidget {
-  const StatisticsPage({Key? key}) : super(key: key);
+  const StatisticsPage({super.key});
 
   @override
   State<StatisticsPage> createState() => _StatisticsPageState();
@@ -55,8 +55,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 })
             .toList();
       });
-    } else {
-      print('Failed to load sleep stats');
     }
   }
 
@@ -64,7 +62,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Summary',
           style: TextStyle(
             fontSize: 32,
@@ -82,10 +80,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
         children: [
           // Graph Section
           Container(
-            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
             child: Column(
               children: [
-                Text(
+                const Text(
                   "Last Week's Sleep",
                   style: TextStyle(
                     fontSize: 26,
@@ -93,10 +91,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     color: Color.fromARGB(255, 13, 71, 161),
                   ),
                 ),
-                SizedBox(height: 10),
-                Container(
+                const SizedBox(height: 10),
+                SizedBox(
                   height: 200,
-                  child: barGraph(
+                  child: BarGraph(
                       barWeek: barWeek), // Replace with your BarGraph widget
                 ),
               ],
@@ -106,8 +104,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
           // Sleep Records Section
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(16),
-              margin: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey), // Grey outline border
                 borderRadius: BorderRadius.circular(10),

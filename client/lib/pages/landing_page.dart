@@ -25,14 +25,14 @@ class _LandingPageState extends State<LandingPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Welcome, $globalUsername',
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
                 color: Colors.white)),
         centerTitle: true,
         backgroundColor: Colors.blue[900],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             Navigator.pushNamed(context, '/login');
             showMessage('Successfully logged out');
@@ -52,7 +52,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -69,7 +69,7 @@ class _LandingPageState extends State<LandingPage> {
                       children: [
                         Text(
                           averageSleep,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.blue),
@@ -88,7 +88,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -105,7 +105,7 @@ class _LandingPageState extends State<LandingPage> {
                       children: [
                         Text(
                           totalSleep,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.blue),
@@ -124,7 +124,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -138,21 +138,20 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     Column(
                       children: [
-                        Container(
-                          child: DropdownButton<String>(
-                            value: startValue,
-                            style: TextStyle(fontSize: 24, color: Colors.blue),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.blue,
-                            ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                startValue = newValue!;
-                              });
-                            },
-                            items: buildDropdownMenuItems(),
+                        DropdownButton<String>(
+                          value: startValue,
+                          style:
+                              const TextStyle(fontSize: 24, color: Colors.blue),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.blue,
                           ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              startValue = newValue!;
+                            });
+                          },
+                          items: buildDropdownMenuItems(),
                         ),
                       ],
                     ),
@@ -168,7 +167,7 @@ class _LandingPageState extends State<LandingPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
+                    const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
@@ -182,21 +181,20 @@ class _LandingPageState extends State<LandingPage> {
                     ),
                     Column(
                       children: [
-                        Container(
-                          child: DropdownButton<String>(
-                            value: endValue,
-                            style: TextStyle(fontSize: 24, color: Colors.blue),
-                            underline: Container(
-                              height: 2,
-                              color: Colors.blue,
-                            ),
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                endValue = newValue!;
-                              });
-                            },
-                            items: buildDropdownMenuItems(),
+                        DropdownButton<String>(
+                          value: endValue,
+                          style:
+                              const TextStyle(fontSize: 24, color: Colors.blue),
+                          underline: Container(
+                            height: 2,
+                            color: Colors.blue,
                           ),
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              endValue = newValue!;
+                            });
+                          },
+                          items: buildDropdownMenuItems(),
                         ),
                       ],
                     ),
@@ -205,13 +203,12 @@ class _LandingPageState extends State<LandingPage> {
               ),
 
               // Add button
-              Container(
+              SizedBox(
                 height: 120,
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
                       if (startValue != endValue) {
-                        print("$startValue and $endValue and $globalUsername");
                         createEntry(globalUsername, startValue, endValue);
                         showMessage('Sleep log added!');
                         // handle later
@@ -220,13 +217,13 @@ class _LandingPageState extends State<LandingPage> {
                         showMessage('Start time cant be the same as end time!');
                       }
                     },
-                    child: Text(
-                      'Add',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue[900],
-                      minimumSize: Size(150, 50),
+                      minimumSize: const Size(150, 50),
+                    ),
+                    child: const Text(
+                      'Add',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
                 ),
@@ -246,7 +243,7 @@ class _LandingPageState extends State<LandingPage> {
                   color: Colors.blue[900],
                 ),
                 child: IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.timeline,
                     size: 36,
                     color: Colors.white,
@@ -267,7 +264,7 @@ class _LandingPageState extends State<LandingPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
