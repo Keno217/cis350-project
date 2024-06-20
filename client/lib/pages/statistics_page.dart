@@ -5,7 +5,7 @@ import 'package:sleepapp/global.dart';
 import 'package:sleepapp/barGraph/bar_graph.dart'; // Assuming you have a BarGraph widget
 
 class StatisticsPage extends StatefulWidget {
-  const StatisticsPage({super.key});
+  const StatisticsPage({Key? key}) : super(key: key);
 
   @override
   State<StatisticsPage> createState() => _StatisticsPageState();
@@ -18,6 +18,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   @override
   void initState() {
     super.initState();
+    getBarGraph();
     getSleepStats();
   }
 
@@ -36,14 +37,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
-      var duration = data['durations'] as List<dynamic>;
       var records = data['records'] as List<dynamic>;
 
       setState(() {
-        barWeek =
-            duration.map<double>((value) => (value as num).toDouble()).toList();
-
-        // Assuming 'records' is an array of sleep record objects
         sleepRecords = records
             .map<Map<String, dynamic>>((record) => {
                   'id': record['id'],
@@ -55,6 +51,34 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 })
             .toList();
       });
+    } else {
+      print('Failed to load sleep stats');
+    }
+  }
+
+  Future<void> getBarGraph() async {
+    String server = 'http://129.80.148.244:3001';
+
+    var response = await http.post(
+      Uri.parse('$server/getBarGraph'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{'user': globalUsername},
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var duration = data['durations'] as List<dynamic>;
+
+      setState(() {
+        barWeek =
+            duration.map<double>((value) => (value as num).toDouble()).toList();
+      });
+    } else {
+      print('Failed to load sleep stats');
     }
   }
 
