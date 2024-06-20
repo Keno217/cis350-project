@@ -9,13 +9,13 @@ class BarGraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BarData data = BarData(
-        sunData: barWeek[0],
-        monData: barWeek[1],
-        tueData: barWeek[2],
-        wedData: barWeek[3],
-        thuData: barWeek[4],
-        friData: barWeek[5],
-        satData: barWeek[6]);
+        sunData: barWeek.length >= 1 ? barWeek[0] : 0,
+        monData: barWeek.length >= 2 ? barWeek[1] : 0,
+        tueData: barWeek.length >= 3 ? barWeek[2] : 0,
+        wedData: barWeek.length >= 4 ? barWeek[3] : 0,
+        thuData: barWeek.length >= 5 ? barWeek[4] : 0,
+        friData: barWeek.length >= 6 ? barWeek[5] : 0,
+        satData: barWeek.length >= 7 ? barWeek[6] : 0);
 
     data.initBarData();
 
