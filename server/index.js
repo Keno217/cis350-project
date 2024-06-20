@@ -91,7 +91,7 @@ app.post('/createRecord', async (req, res) => {
     record.year = today.getFullYear();
 
     // delete record(s) for the same day
-    await RecordsModel.deleteMany({user: record.user, day: record.day, month: record.month, year: record.year});
+    await RecordsModel.deleteMany({ user: record.user, day: record.day, month: record.month, year: record.year });
 
     const newRecord = new RecordsModel(record);
     await newRecord.save();
@@ -101,25 +101,41 @@ app.post('/createRecord', async (req, res) => {
 app.post('/getSleepStats', (req, res) => {
     const user = req.body;
 
-    RecordsModel.find({ user: user.user }).then(data => {
-        var dateMap = {};
-        var totalSleepDuration = 0;
-        data.forEach(record => {
-            var start = new Date(record.start_time);
-            var end = new Date(record.end_time);
-            var date = start.toLocaleDateString();
-            var duration = end - start; 
+    RecordsModel.find({ user: user.user })
+        .sort({ date: -1 })
+        .limit(7)
+        .then(data => {
+            let weeklyDuration = data.map(record => {
+                const duration = Math.abs(record.end_time - record.start_time);
+                duration = duration / 60;
+                return duration;
+            });
 
-            dateMap[date] = (dateMap[date] || 0) + (end - start);
-            totalSleepDuration += duration;
+            RecordsModel.find({ user: user.user }).then(data => {
+                let formattedData = data.map(record => {
+                    // calculate duration and format date
+                    const duration = Math.abs(record.end_time - record.start_time)
+                    const date = `${record.year}-${record.month}-${record.day}`;
+
+                    return {
+                        id: record.id,
+                        user: record.user,
+                        startTime: record.start_time,
+                        endTime: record.end_time,
+                        date: date,
+                        duration: duration
+                    };
+                });
+
+                res.status(200).json({
+                    success: true,
+                    records: formattedData,
+                    duration: weeklyDuration
+                });
+            })
+                .catch(err => {
+                    console.error('Error:', err);
+                    res.status(500).json({ success: false, error: 'Failed to fetch sleep records' });
+                })
         });
-
-        var numDays = Object.keys(dateMap).length;
-        var averageSleepDuration = totalSleepDuration / numDays;
-
-        res.json({
-            dates: dateMap,
-            average: averageSleepDuration,
-        });
-    });
 })

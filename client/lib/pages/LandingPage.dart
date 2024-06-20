@@ -216,6 +216,8 @@ class _LandingPageState extends State<LandingPage> {
                         showMessage('Sleep log added!');
                         // handle later
                         return;
+                      } else {
+                        showMessage('Start time cant be the same as end time!');
                       }
                     },
                     child: Text(

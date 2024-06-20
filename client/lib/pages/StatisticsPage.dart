@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sleepapp/barGraph/BarGraph.dart';
-import 'package:sleepapp/global.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:sleepapp/global.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({Key? key}) : super(key: key);
@@ -33,18 +33,18 @@ class _StatisticsPageState extends State<StatisticsPage> {
       ),
     );
 
-    //if (response.statusCode == 200) {
-    //var data = jsonDecode(response.body);
-    //var dates = data['dates'] as Map<String, dynamic>; // handle returns later
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      var duration = data['durations'] as List<dynamic>;
 
-    //setState(() {
-    //barWeek = dates.values
-    //  .map<double>((value) => (value as num).toDouble() / 60.0)
-    //.toList();
-    //});
-    //} else {
-    // Handle error
-    //}
+      setState(() {
+        barWeek = duration
+            .map<double>((value) => (value as num).toDouble())
+            .toList(); // iterates through map 'duration' and casts them into a float, then stored into a list
+      });
+    } else {
+      print('Failed to load sleep stats');
+    }
   }
 
   @override
