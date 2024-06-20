@@ -101,9 +101,17 @@ app.post('/createRecord', async (req, res) => {
 app.post('/getSleepStats', (req, res) => {
     const user = req.body;
 
-    RecordsModel.find({ user: user.user })
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+
+    const startOfWeek = new Date(weekAgo);
+    startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+
+    const endOfWeek = new Date(weekAgo);
+    endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay()));
+
+    RecordsModel.find({ user: user.user, date: { $gte: startOfWeek, $lte: endOfWeek } })
         .sort({ date: -1 })
-        .limit(7)
         .then(data => {
             let weeklyDuration = data.map(record => {
                 var duration = Math.abs(record.end_time - record.start_time);
@@ -112,6 +120,7 @@ app.post('/getSleepStats', (req, res) => {
             });
 
             RecordsModel.find({ user: user.user }).then(data => {
+                
                 let formattedData = data.map(record => {
                     // calculate duration and format date
                     const duration = Math.abs(record.end_time - record.start_time)
@@ -127,10 +136,16 @@ app.post('/getSleepStats', (req, res) => {
                     };
                 });
 
+                totalMinutes = 0;
+                data.forEach(record => {
+                    totalMinutes += Math.abs(record.end_time - record.start_time)
+                })
+
                 res.status(200).json({
                     success: true,
                     records: formattedData,
-                    durations: weeklyDuration
+                    durations: weeklyDuration,
+                    totalMinutes: totalMinutes
                 });
             })
                 .catch(err => {

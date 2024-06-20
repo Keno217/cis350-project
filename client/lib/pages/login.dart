@@ -38,6 +38,7 @@ class _LoginState extends State<Login> {
     }
 
     String server = 'http://129.80.148.244:3001';
+    String hashedPassword = hashPassword(password);
 
     var response = await http.post(
       Uri.parse('$server/loginUser'),
@@ -46,7 +47,7 @@ class _LoginState extends State<Login> {
       },
       body: jsonEncode(<String, String>{
         'user': username,
-        'pass': password,
+        'pass': hashedPassword,
       }),
     );
 

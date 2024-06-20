@@ -2,9 +2,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:sleepapp/barGraph/BarData.dart';
 
-class BarGraph extends StatelessWidget {
+class barGraph extends StatelessWidget {
   final List barWeek;
-  const BarGraph({super.key, required this.barWeek});
+  const barGraph({super.key, required this.barWeek});
 
   @override
   Widget build(BuildContext context) {

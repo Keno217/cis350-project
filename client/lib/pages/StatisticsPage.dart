@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sleepapp/barGraph/BarGraph.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sleepapp/global.dart';
+import 'package:sleepapp/barGraph/BarGraph.dart'; // Assuming you have a BarGraph widget
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({Key? key}) : super(key: key);
@@ -13,6 +13,7 @@ class StatisticsPage extends StatefulWidget {
 
 class _StatisticsPageState extends State<StatisticsPage> {
   List<double> barWeek = [0, 0, 0, 0, 0, 0, 0];
+  List<Map<String, dynamic>> sleepRecords = [];
 
   @override
   void initState() {
@@ -36,11 +37,23 @@ class _StatisticsPageState extends State<StatisticsPage> {
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
       var duration = data['durations'] as List<dynamic>;
+      var records = data['records'] as List<dynamic>;
 
       setState(() {
-        barWeek = duration
-            .map<double>((value) => (value as num).toDouble())
-            .toList(); // iterates through map 'duration' and casts them into a float, then stored into a list
+        barWeek =
+            duration.map<double>((value) => (value as num).toDouble()).toList();
+
+        // Assuming 'records' is an array of sleep record objects
+        sleepRecords = records
+            .map<Map<String, dynamic>>((record) => {
+                  'id': record['id'],
+                  'user': record['user'],
+                  'startTime': record['startTime'],
+                  'endTime': record['endTime'],
+                  'date': record['date'],
+                  'duration': record['duration'],
+                })
+            .toList();
       });
     } else {
       print('Failed to load sleep stats');
@@ -64,57 +77,69 @@ class _StatisticsPageState extends State<StatisticsPage> {
         automaticallyImplyLeading: false,
       ),
       backgroundColor: Colors.white,
-      body: Stack(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Column(
-            children: [
-              // All Sleep
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
-                height: 100,
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
+          // Graph Section
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 25, horizontal: 25),
+            child: Column(
+              children: [
+                Text(
+                  "Last Week's Sleep",
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 13, 71, 161),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: 200,
+                  child: barGraph(
+                      barWeek: barWeek), // Replace with your BarGraph widget
+                ),
+              ],
+            ),
+          ),
+
+          // Sleep Records Section
+          Expanded(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              margin: EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey), // Grey outline border
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ListView.builder(
+                itemCount: sleepRecords.length,
+                itemBuilder: (context, index) {
+                  var record = sleepRecords[index];
+                  return ListTile(
+                    title: Text('ID: ${record['id']}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Last Weeks Sleep",
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 13, 71, 161),
-                          ),
-                        ),
+                        Text('User: ${record['user']}'),
+                        Text('Date: ${record['date']}'),
+                        Text('Start Time: ${record['startTime']}'),
+                        Text('End Time: ${record['endTime']}'),
+                        Text('Duration: ${record['duration']} minutes'),
                       ],
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 0, horizontal: 25),
-                height: 200,
-                child: BarGraph(
-                  barWeek: barWeek,
-                ),
-              ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [],
-                ),
-              ),
-            ],
+            ),
           ),
+
+          // Home Button
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(
+                  bottom: 20), // Adjusted to 60 to move it further down
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),

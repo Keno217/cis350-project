@@ -1,3 +1,4 @@
+import 'package:sleepapp/global.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -165,6 +166,8 @@ Future<int> createUser(
     BuildContext context) async {
   String server = 'http://129.80.148.244:3001';
 
+  String hashedPassword = hashPassword(password);
+
   var response = await http.post(
     Uri.parse('$server/createUser'),
     headers: <String, String>{
@@ -172,7 +175,7 @@ Future<int> createUser(
     },
     body: jsonEncode(<String, String>{
       'user': username,
-      'pass': password,
+      'pass': hashedPassword,
     }),
   );
 
