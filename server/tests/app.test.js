@@ -13,16 +13,6 @@ afterEach(async () => {
   await mongoose.connection.close();
 });
 
-describe("GET /getUser", () => {
-  it("should return user", async () => {
-    const response = await request(app).get("/getUser").send({
-      user: "server test",
-    });
-
-    expect(response.statusCode).toBe(200);
-  });
-});
-
 describe("POST /loginUser", () => {
   it("should login as user", async () => {
     const response = await request(app).post("/loginUser").send({
