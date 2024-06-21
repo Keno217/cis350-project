@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:sleepapp/global.dart';
-import 'package:sleepapp/barGraph/bar_graph.dart'; // Assuming you have a BarGraph widget
+import 'package:sleepapp/barGraph/bar_graph.dart';
 
 class StatisticsPage extends StatefulWidget {
   const StatisticsPage({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   List<double> barWeek = [0, 0, 0, 0, 0, 0, 0];
   List<Map<String, dynamic>> sleepRecords = [];
 
-  @override
+  @override // initialize bargraph and history of sleep records
   void initState() {
     super.initState();
     getBarGraph();
@@ -23,6 +23,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Future<void> getSleepStats() async {
+    // get sleep statistics for history
     String server = 'http://129.80.148.244:3001';
 
     var response = await http.post(
@@ -56,6 +57,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Future<void> getBarGraph() async {
+    // get bargraph data
     String server = 'http://129.80.148.244:3001';
 
     var response = await http.post(
@@ -101,7 +103,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Graph Section
+          // graph section
           Container(
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
             child: Column(
@@ -117,24 +119,23 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 const SizedBox(height: 10),
                 SizedBox(
                   height: 200,
-                  child: BarGraph(
-                      barWeek: barWeek), // Replace with your BarGraph widget
+                  child: BarGraph(barWeek: barWeek),
                 ),
               ],
             ),
           ),
 
-          // Sleep Records Section
+          // sleep records section
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(16),
               margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey), // Grey outline border
+                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Scrollbar(
-                thumbVisibility: true, // Always show the scroll bar
+                thumbVisibility: true,
                 child: ListView.builder(
                   itemCount: sleepRecords.length,
                   itemBuilder: (context, index) {
@@ -143,8 +144,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       title: Text(
                         'ID: ${record['id'].substring(0, 8)}',
                         style: const TextStyle(
-                          fontSize: 18, // Larger font size for the ID
-                          fontWeight: FontWeight.bold, // Optional: bold text
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       subtitle: Column(
@@ -163,12 +164,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
             ),
           ),
 
-          // Home Button
+          // home button
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 20), // Adjusted to 60 to move it further down
+              padding: const EdgeInsets.only(bottom: 20),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),

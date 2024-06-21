@@ -11,18 +11,17 @@ class LandingPage extends StatefulWidget {
 }
 
 class _LandingPageState extends State<LandingPage> {
-  String startValue = "0";
+  String startValue =
+      "0"; // start time slept measured in minutes of datatype int
   String endValue = "0";
 
   String averageSleep = "";
   String slept = "";
   String totalSleep = "";
 
-  String funFactLine1 = "Counting sheep works";
-  String funFactLine2 = "because sheep sounds like sleep!";
-
   @override
   void initState() {
+    // initialize averageSleep & totalSleep at launch
     super.initState();
     getStats(globalUsername);
   }
@@ -41,7 +40,7 @@ class _LandingPageState extends State<LandingPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pushNamed(context, '/login');
+            Navigator.pushNamed(context, '/login'); // logout button
             showMessage('Successfully logged out');
           },
         ),
@@ -51,7 +50,7 @@ class _LandingPageState extends State<LandingPage> {
         children: [
           Column(
             children: [
-              // Average Sleep
+              // average sleep
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
@@ -87,7 +86,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
 
-              // Total Sleep
+              // total sleep
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
@@ -123,7 +122,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
 
-              // Start Time
+              // start time
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
@@ -158,7 +157,8 @@ class _LandingPageState extends State<LandingPage> {
                               startValue = newValue!;
                             });
                           },
-                          items: buildDropdownMenuItems(),
+                          items:
+                              buildDropdownMenuItems(), // build drop down arrow selections which get repetitive
                         ),
                       ],
                     ),
@@ -166,7 +166,7 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
 
-              // End Time
+              // end time
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 25, horizontal: 0),
@@ -209,20 +209,21 @@ class _LandingPageState extends State<LandingPage> {
                 ),
               ),
 
-              // Add button
+              // add button
               SizedBox(
                 height: 120,
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () async {
                       if (startValue != endValue) {
-                        await createEntry(globalUsername, startValue, endValue);
-                        getStats(globalUsername);
-                        showMessage('Sleep log added!');
-                        // handle later
-                        return;
+                        await createEntry(globalUsername, startValue,
+                            endValue); // create a sleep record if the start time and ending time differ
+                        getStats(
+                            globalUsername); // then refresh the page with updated sleep record
+                        return showMessage('Sleep log added!');
                       } else {
-                        showMessage('Start time cant be the same as end time!');
+                        return showMessage(
+                            'Start time cant be the same as end time!');
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -295,6 +296,7 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Future<void> getStats(String username) async {
+    // get the averageSlept time, time slept and amount needed for sleep
     String server = 'http://129.80.148.244:3001';
 
     final response = await http.post(
@@ -322,6 +324,7 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Future<http.Response> createEntry(String username, startTime, endTime) async {
+    // store a Sleep Record with starting end ending time
     String server = 'http://129.80.148.244:3001';
 
     return await http.post(

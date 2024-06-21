@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Login",
         home: const Login(),
+
         //routing list of pages.  just add another line for different pages
         routes: {
           '/register': (context) => Register(),

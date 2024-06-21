@@ -8,6 +8,7 @@ class BarGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TAKEN FROM ORIGINAL BARGRAPH LIBRARY, ONLY THING CHANGED IS WE INITIALIZED EVERY BARGRAPH TO BE 0
     BarData data = BarData(
         sunData: barWeek.isNotEmpty ? barWeek[0] : 0,
         monData: barWeek.length >= 2 ? barWeek[1] : 0,

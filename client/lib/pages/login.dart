@@ -17,6 +17,7 @@ class _LoginState extends State<Login> {
 
   @override
   void dispose() {
+    // removes username and password text editor ensuring no mem. leaks
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -39,11 +40,13 @@ class _LoginState extends State<Login> {
     }
 
     setState(() {
+      // sign in icon becomes loading icon so client cant spam req
       _isLoading = true;
     });
 
-    String server = 'http://129.80.148.244:3001';
-    String hashedPassword = hashPassword(password);
+    String server = 'http://129.80.148.244:3001'; // server from oracle on 24/7
+    String hashedPassword =
+        hashPassword(password); // hash password before it is sent over the net
 
     var response = await http.post(
       Uri.parse('$server/loginUser'),
@@ -62,7 +65,7 @@ class _LoginState extends State<Login> {
 
     if (response.statusCode == 200) {
       _showErrorMessage('Login Successful.');
-      globalUsername = username;
+      globalUsername = username; // set username we will use in other files
       Navigator.pushNamed(context, '/landing');
     } else {
       _showErrorMessage('Invalid Credentials.');
@@ -129,7 +132,8 @@ class _LoginState extends State<Login> {
                                 onPressed: () async {
                                   String username = _usernameController.text;
                                   String password = _passwordController.text;
-                                  await loginUser(username, password);
+                                  await loginUser(username,
+                                      password); // http post with user and password
                                 },
                                 child: const Text('Sign In',
                                     style: TextStyle(color: Colors.cyan)),

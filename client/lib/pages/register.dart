@@ -17,12 +17,14 @@ class _RegisterState extends State<Register> {
 
   @override
   void dispose() {
+    // delete text controller when moving to different page for mem. leak
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void _showErrorMessage(BuildContext context, String message) {
+  void showMessage(BuildContext context, String message) {
+    // function to pop in http post
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -33,6 +35,7 @@ class _RegisterState extends State<Register> {
     String hashedPassword = hashPassword(password);
 
     var response = await http.post(
+      // create an account and hash the password before sending over the net
       Uri.parse('$server/createUser'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -132,25 +135,25 @@ class _RegisterState extends State<Register> {
                                   String username = _usernameController.text;
                                   String password = _passwordController.text;
                                   if (username.isEmpty) {
-                                    _showErrorMessage(context,
+                                    showMessage(context,
                                         'Username must be at least 1 character');
                                     return;
                                   }
 
                                   if (username.length > 12) {
-                                    _showErrorMessage(context,
+                                    showMessage(context,
                                         'Username must be less than 12 characters');
                                     return;
                                   }
 
                                   if (password.length < 3) {
-                                    _showErrorMessage(context,
+                                    showMessage(context,
                                         'Password must be at least 3 characters');
                                     return;
                                   }
 
                                   if (password.length > 12) {
-                                    _showErrorMessage(context,
+                                    showMessage(context,
                                         'Password must be less than 12 characters');
                                     return;
                                   }
@@ -167,20 +170,18 @@ class _RegisterState extends State<Register> {
                                   });
 
                                   if (response == 0) {
-                                    _showErrorMessage(
+                                    showMessage(
                                         context, 'Server connection error');
                                     return;
                                   }
 
                                   if (response == 1) {
-                                    _showErrorMessage(
-                                        context, 'Account Created');
+                                    showMessage(context, 'Account Created');
                                     return;
                                   }
 
                                   if (response == 2) {
-                                    _showErrorMessage(
-                                        context, 'User already exists');
+                                    showMessage(context, 'User already exists');
                                     return;
                                   }
                                 },

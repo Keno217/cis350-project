@@ -12,13 +12,7 @@ app.use(cors());
 
 module.exports = app;
 
-app.get("/getUser", (req, res) => {
-    const { user,s } = req.body;
-  UsersModel.find({ username: user }).then((data) => {
-    res.json(data);
-  });
-});
-
+// routes
 app.post("/loginUser", async (req, res) => {
   const { user, pass } = req.body;
   const client = await UsersModel.findOne({ username: user });
@@ -27,7 +21,7 @@ app.post("/loginUser", async (req, res) => {
     return res.status(404).json({ message: "User not found" });
   }
 
-  const isPasswordValid = await bcrypt.compare(pass, client.password);
+  const isPasswordValid = await bcrypt.compare(pass, client.password); // compare hashed passwords
 
   if (!isPasswordValid) {
     return res.status(401).json({ message: "Invalid credentials." });
@@ -45,8 +39,8 @@ app.post("/createUser", async (req, res) => {
     return res.status(409).json({ error: "User already exists." });
   }
 
-  const salt = await bcrypt.genSalt(15);
-  const hashedPassword = await bcrypt.hash(pass, salt);
+  const salt = await bcrypt.genSalt(15); // hash rng key
+  const hashedPassword = await bcrypt.hash(pass, salt); // hash password again once received over the net
 
   const newUser = new UsersModel({ username: user, password: hashedPassword });
   await newUser.save();
@@ -88,23 +82,23 @@ app.post("/getBarGraph", (req, res) => {
   weekAgo.setDate(weekAgo.getDate() - 7);
 
   const startOfWeek = new Date(weekAgo);
-  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // get start of week (sunday is start of week for our app)
 
   const endOfWeek = new Date(weekAgo);
-  endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay()));
+  endOfWeek.setDate(endOfWeek.getDate() + (6 - endOfWeek.getDay())); // get end of week (saturday) for our app
 
   RecordsModel.find({
     user: user.user,
-    day: { $gte: startOfWeek.getDate(), $lte: endOfWeek.getDate() },
+    day: { $gte: startOfWeek.getDate(), $lte: endOfWeek.getDate() }, // look for record models starting from start of week to end of week
   })
     .sort({ year: -1, month: -1, day: -1 })
     .then((data) => {
-      let weeklyDuration = new Array(7).fill(0.0);
+      let weeklyDuration = new Array(7).fill(0.0); // array mimics the week index 0 - 6 (sunday - saturday)
 
       data.forEach((record) => {
         const date = new Date(record.year, record.month - 1, record.day);
         const dayIndex = date.getDay(); // sunday (0) - saturday (6)
-        const duration = Math.abs(record.end_time - record.start_time) / 60;
+        const duration = Math.abs(record.end_time - record.start_time) / 60; // the amount of time of slept for that sleep record
         weeklyDuration[dayIndex] = duration;
       });
 
@@ -138,7 +132,8 @@ app.post("/getAverages", (req, res) => {
         qtyRestNeeded = 8 * 60 * recordCount;
       }
 
-      const averageDurationHHMM = convert(Math.round(averageDuration));
+      // convert into HH:MM format
+      const averageDurationHHMM = convert(Math.round(averageDuration)); 
       const qtyRestNeededHHMM = convert(Math.round(qtyRestNeeded));
       const totalDurationHHMM = convert(Math.round(totalDuration));
 
@@ -163,6 +158,8 @@ app.post("/getSleepStats", (req, res) => {
         // calculate duration and format date
         duration = Math.abs(record.end_time - record.start_time);
         const date = `${record.year}-${record.month}-${record.day}`;
+
+        // convert into HH:MM format
         startTime = convert(record.start_time);
         endTime = convert(record.end_time);
         duration = convert(duration);
@@ -190,7 +187,12 @@ app.post("/getSleepStats", (req, res) => {
     });
 });
 
-function convert(minutes) {
+
+
+
+
+// function(s)
+function convert(minutes) { // convert minutes into HH:MM format
   if (typeof minutes !== "number" || isNaN(minutes)) {
     return "00:00"; // Default value if minutes is not a valid number
   }
