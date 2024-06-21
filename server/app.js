@@ -50,7 +50,7 @@ app.post("/createUser", async (req, res) => {
 
 app.get("/getRecords", (req, res) => {
   const user = req.body;
-  RecordsModel.find({ user: user.user }).then((data) => {
+  RecordsModel.find({ username: user.user }).then((data) => {
     res.json(data);
   });
 });
