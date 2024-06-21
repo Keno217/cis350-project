@@ -14,8 +14,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18
-          env:
-      SUPER_SECRET: ${{ secrets.SuperSecret }}
       - run: npm ci
       - run: npm test
 
