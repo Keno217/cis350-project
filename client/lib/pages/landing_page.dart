@@ -295,7 +295,7 @@ class _LandingPageState extends State<LandingPage> {
   }
 
   Future<void> getStats(String username) async {
-    String server = 'http://localhost:3001';
+    String server = 'http://129.80.148.244:3001';
 
     final response = await http.post(
       Uri.parse('$server/getAverages'),

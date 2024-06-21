@@ -23,7 +23,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Future<void> getSleepStats() async {
-    String server = 'http://localhost:3001';
+    String server = 'http://129.80.148.244:3001';
 
     var response = await http.post(
       Uri.parse('$server/getSleepStats'),
@@ -43,7 +43,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
         sleepRecords = records
             .map<Map<String, dynamic>>((record) => {
                   'id': record['id'],
-                  'user': record['user'],
                   'startTime': record['startTime'],
                   'endTime': record['endTime'],
                   'date': record['date'],
@@ -134,24 +133,32 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 border: Border.all(color: Colors.grey), // Grey outline border
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: ListView.builder(
-                itemCount: sleepRecords.length,
-                itemBuilder: (context, index) {
-                  var record = sleepRecords[index];
-                  return ListTile(
-                    title: Text('ID: ${record['id']}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('User: ${record['user']}'),
-                        Text('Date: ${record['date']}'),
-                        Text('Start Time: ${record['startTime']}'),
-                        Text('End Time: ${record['endTime']}'),
-                        Text('Duration: ${record['duration']} minutes'),
-                      ],
-                    ),
-                  );
-                },
+              child: Scrollbar(
+                thumbVisibility: true, // Always show the scroll bar
+                child: ListView.builder(
+                  itemCount: sleepRecords.length,
+                  itemBuilder: (context, index) {
+                    var record = sleepRecords[index];
+                    return ListTile(
+                      title: Text(
+                        'ID: ${record['id'].substring(0, 8)}',
+                        style: const TextStyle(
+                          fontSize: 18, // Larger font size for the ID
+                          fontWeight: FontWeight.bold, // Optional: bold text
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Date: ${record['date']}'),
+                          Text('Start Time: ${record['startTime']}'),
+                          Text('End Time: ${record['endTime']}'),
+                          Text('Duration: ${record['duration']} Hours'),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),

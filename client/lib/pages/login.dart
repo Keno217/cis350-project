@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:sleepapp/global.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +13,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -39,6 +38,10 @@ class _LoginState extends State<Login> {
       return;
     }
 
+    setState(() {
+      _isLoading = true;
+    });
+
     String server = 'http://129.80.148.244:3001';
     String hashedPassword = hashPassword(password);
 
@@ -52,6 +55,10 @@ class _LoginState extends State<Login> {
         'pass': hashedPassword,
       }),
     );
+
+    setState(() {
+      _isLoading = false;
+    });
 
     if (response.statusCode == 200) {
       _showErrorMessage('Login Successful.');
@@ -109,15 +116,24 @@ class _LoginState extends State<Login> {
                           obscureText: true,
                         ),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed: () async {
-                            String username = _usernameController.text;
-                            String password = _passwordController.text;
-                            await loginUser(username, password);
-                          },
-                          child: const Text('Sign In',
-                              style: TextStyle(color: Colors.cyan)),
-                        ),
+                        _isLoading
+                            ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.cyan),
+                                ),
+                              )
+                            : ElevatedButton(
+                                onPressed: () async {
+                                  String username = _usernameController.text;
+                                  String password = _passwordController.text;
+                                  await loginUser(username, password);
+                                },
+                                child: const Text('Sign In',
+                                    style: TextStyle(color: Colors.cyan)),
+                              ),
                       ],
                     ),
                   ),
