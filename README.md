@@ -1,15 +1,13 @@
-# Sleep Tracker & Calculator
+# Sleep Tracker
 #### [JIRA](https://mail-team-xsccm6lw.atlassian.net/jira/software/projects/SCRUM/boards/1)
 ## 1 Abstract
-The purpose of this app is twofold:
-1. Help users track their sleep so that they can understand when and for how long they sleep. Tracking this information will help users to understand trends in their sleep schedule, duration, and quality.
-2. Use data on sleep cycles to guide users on when best to fall asleep/wake up to maximize sleep quality without compromising on duration.
+The purpose of this app is to help users track their sleep so that they can understand when and for how long they sleep. Tracking this information will help users to understand trends in their sleep schedule, duration, and quality.
 
 ## 2 Introduction
-Have you ever laid in bed, eyes closed, but feel wide awake? That is the case for many, and in todays world, getting a good night of sleep is more important than ever. However, understanding and improving sleep habits can be a challenge for many. Introducing our Sleep Tracker & Calculator app, it is designed to revolutionize the way users go about their sleep routine. This tool not only helps users track their sleep patterns, but also provides insight into sleep quality and duration. By analyzing data gathered on sleep cycles, the app offers personalized recommendations on the optimal times to fall asleep and wake up. Whether you're struggling with insomnia, jet lag, or simply want to optimize your sleep schedule, our app is your solution for achieving a good night of sleep.
+Have you ever laid in bed, eyes closed, but feel wide awake? That is the case for many, and in todays world, getting a good night of sleep is more important than ever. However, understanding and improving sleep habits can be a challenge for many. Introducing our Sleep Tracker app, it is designed to revolutionize the way users go about their sleep routine. This tool not only helps users track their sleep patterns, but also provides insight into sleep quality and duration.
 
 ## 3 Architectural Design
-Our software is designed to use a client-server architecture. The client is in the form of an interactive app where the user can enter their sleep information and request good times to wake up/fall asleep. The server, using node, will process the sleep calculations and send sleep tracking information to and from mongoDB. So when the client requests sleep tracking data from the server, the server then gets that from the database and responds with both those records and an analysis of that data. Similarly, when the client requests the best time to wake up/fall asleep, the server performs that requisite calculations and responds with the results.
+Our software is designed to use a client-server architecture. The client is in the form of an interactive app where the user can enter their sleep information and request their personal stats. The server, using node, will process the sleep stats and send sleep tracking information to and from mongoDB. So when the client requests sleep tracking data from the server, the server then gets that from the database and responds with both those records and an analysis of that data.
 
 <p align="center">
   <img src="images/architecture.png" alt="sequence diagram">
@@ -52,8 +50,11 @@ Upon navigation to the statistics page, the user is greeted with a larger sample
 </p>
 
 ## 5 Future Scope
-There are several possibilities for the future scope of this project. Currently this software provides an estimate of the best time to wake up/fall asleep but doesn't do much beyond that simple calculation. In the future we may expand this so that it can act as an alarm clock or tailor the calculations for the specific user and their sleep patterns. The sleep tracking portion may also provide more detailed analysis of the user's sleep patterns and how they've changed over time.
+There are several possibilities for the future scope of this project. The sleep tracking portion may provide more detailed analysis of the user's sleep patterns and how they've changed over time. Another possibility is that the sleep tracking may take into account non-standard sleep cycles when analyzing user stats.
 
-## 6 Conclusion
+## 6 Risks
+The main challenge we faced was with effectively communicating and figuring out exactly what needed to be done. We addressed this by using JIRA to track and organize our tasks. In retrospect, we could have done this more effectively by coordinating ahead of time.
+
+
+## 7 Conclusion
 Our Sleep Tracker & Calculator app aims to encourage users to take control of their sleep habits and improve their quality of life. By providing insight, this app has the potential to change the way how people approach sleep. As we continue to refine and enhance this project, the team is excited to help you on your journey.
-
