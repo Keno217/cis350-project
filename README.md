@@ -58,3 +58,6 @@ The main challenge we faced was with effectively communicating and figuring out 
 
 ## 7 Conclusion
 Our Sleep Tracker & Calculator app aims to encourage users to take control of their sleep habits and improve their quality of life. By providing insight, this app has the potential to change the way how people approach sleep. As we continue to refine and enhance this project, the team is excited to help you on your journey.
+
+## 8 Walkthrough
+[WALKTHROUGH VIDEO](https://www.youtube.com/watch?v=H6zB_PkrCO0)
