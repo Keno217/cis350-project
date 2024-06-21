@@ -23,7 +23,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   Future<void> getSleepStats() async {
-    String server = 'http://129.80.148.244:3001';
+    String server = 'http://localhost:3001';
 
     var response = await http.post(
       Uri.parse('$server/getSleepStats'),

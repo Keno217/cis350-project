@@ -130,38 +130,90 @@ app.post('/getBarGraph', (req, res) => {
         });
 });
 
+app.post('/getAverages', (req, res) => {
+    user = req.body
+
+    RecordsModel.find({ user: user.user }).then(data => {
+        let averageDuration = 0;
+        let totalDuration = 0;
+        let qtyRestNeeded = 0; // quantity of rest needed. Each day you should sleep 8 hours. If you have three records this value should be 24. 
+        let recordCount = data.length;
+
+        data.forEach(record => {
+            const duration = Math.abs(record.end_time - record.start_time);
+            totalDuration += duration;
+        });
+
+        if (recordCount > 0) {
+            averageDuration = (totalDuration / recordCount);
+            qtyRestNeeded = (8 * 60 * recordCount);
+        }
+
+        const averageDurationHHMM = convert(Math.round(averageDuration));
+        const qtyRestNeededHHMM = convert(Math.round(qtyRestNeeded));
+        const totalDurationHHMM = convert(Math.round(totalDuration));
+
+        res.status(200).json({
+            averageDuration: averageDurationHHMM,
+            totalRest: totalDurationHHMM,
+            qtyRestNeeded: qtyRestNeededHHMM
+        });
+    }).catch(err => {
+        console.error('Error fetching records:', err);
+        res.status(500).json({ error: 'Error fetching records' });
+    });
+});
+
+
 
 app.post('/getSleepStats', (req, res) => {
     user = req.body
-    RecordsModel.find({ user: user.user }).then(data => {
-        let formattedData = data.map(record => { // calculate duration and format date
-            const duration = Math.abs(record.end_time - record.start_time)
-            const date = `${record.year}-${record.month}-${record.day}`;
+    RecordsModel.find({ user: user.user })
+        .sort({ year: -1, month: -1, day: -1 })
+        .then(data => {
 
-            return {
-                id: record.id,
-                user: record.user,
-                startTime: record.start_time,
-                endTime: record.end_time,
-                date: date,
-                duration: duration
-            };
-        });
+            let formattedData = data.map(record => { // calculate duration and format date
+                const duration = Math.abs(record.end_time - record.start_time)
+                const date = `${record.year}-${record.month}-${record.day}`;
 
-        totalMinutes = 0;
-        data.forEach(record => {
-            totalMinutes += Math.abs(record.end_time - record.start_time)
+                return {
+                    id: record.id,
+                    user: record.user,
+                    startTime: record.start_time,
+                    endTime: record.end_time,
+                    date: date,
+                    duration: duration
+                };
+            });
+
+            totalMinutes = 0;
+            data.forEach(record => {
+                totalMinutes += Math.abs(record.end_time - record.start_time)
+            })
+
+            res.status(200).json({
+                success: true,
+                records: formattedData,
+                totalMinutes: totalMinutes
+            });
         })
-
-        res.status(200).json({
-            success: true,
-            records: formattedData,
-            totalMinutes: totalMinutes
-        });
-    })
         .catch(err => {
             console.error('Error:', err);
             res.status(500).json({ success: false, error: 'Failed to fetch sleep records' });
         })
 });
+
+function convert(minutes) {
+    if (typeof minutes !== 'number' || isNaN(minutes)) {
+        return '00:00'; // Default value if minutes is not a valid number
+    }
+
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    const hoursStr = hours < 10 ? '0' + hours : hours.toString();
+    const minsStr = mins < 10 ? '0' + mins : mins.toString();
+
+    return hoursStr + ':' + minsStr;
+}
 

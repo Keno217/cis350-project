@@ -14,11 +14,18 @@ class _LandingPageState extends State<LandingPage> {
   String startValue = "0";
   String endValue = "0";
 
-  String averageSleep = "7:15 Hours";
-  String totalSleep = "21:45 / 24:00 Hours";
+  String averageSleep = "";
+  String slept = "";
+  String totalSleep = "";
 
   String funFactLine1 = "Counting sheep works";
   String funFactLine2 = "because sheep sounds like sleep!";
+
+  @override
+  void initState() {
+    super.initState();
+    getStats(globalUsername);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +75,7 @@ class _LandingPageState extends State<LandingPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          averageSleep,
+                          '$averageSleep Hours Slept',
                           style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -104,7 +111,7 @@ class _LandingPageState extends State<LandingPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          totalSleep,
+                          '$slept / $totalSleep Hours',
                           style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
@@ -207,9 +214,10 @@ class _LandingPageState extends State<LandingPage> {
                 height: 120,
                 child: Center(
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (startValue != endValue) {
-                        createEntry(globalUsername, startValue, endValue);
+                        await createEntry(globalUsername, startValue, endValue);
+                        getStats(globalUsername);
                         showMessage('Sleep log added!');
                         // handle later
                         return;
@@ -284,6 +292,33 @@ class _LandingPageState extends State<LandingPage> {
       );
     }
     return items;
+  }
+
+  Future<void> getStats(String username) async {
+    String server = 'http://localhost:3001';
+
+    final response = await http.post(
+      Uri.parse('$server/getAverages'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(
+        <String, String>{'user': username},
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      String averageSleepTime = data['averageDuration'] ?? '00:00';
+      String totalRest = data['totalRest'] ?? '00:00';
+      String qtyRestNeeded = data['qtyRestNeeded'] ?? '00:00';
+
+      setState(() {
+        averageSleep = averageSleepTime;
+        totalSleep = qtyRestNeeded;
+        slept = totalRest;
+      });
+    }
   }
 
   Future<http.Response> createEntry(String username, startTime, endTime) async {
