@@ -4,11 +4,12 @@ jobs:
   node_test:
     name: Run node test
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: server
     steps:
-      - run: npm install
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - run: npm ci
       - run: npm test
 
   flutter_test:
