@@ -27,7 +27,7 @@ describe("POST /loginUser", () => {
   it("should login as user", async () => {
     const response = await request(app).post("/loginUser").send({
       user: "server test",
-      pass: "server test"
+      pass: "server test",
     });
 
     expect(response.statusCode).toBe(200);
@@ -38,7 +38,7 @@ describe("POST /loginUser with invalid credentials", () => {
   it("should fail to login", async () => {
     const response = await request(app).post("/loginUser").send({
       user: "server test",
-      pass: "something else"
+      pass: "something else",
     });
 
     expect(response.statusCode).toBe(401);

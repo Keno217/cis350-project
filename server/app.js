@@ -133,7 +133,7 @@ app.post("/getAverages", (req, res) => {
       }
 
       // convert into HH:MM format
-      const averageDurationHHMM = convert(Math.round(averageDuration)); 
+      const averageDurationHHMM = convert(Math.round(averageDuration));
       const qtyRestNeededHHMM = convert(Math.round(qtyRestNeeded));
       const totalDurationHHMM = convert(Math.round(totalDuration));
 
@@ -187,12 +187,9 @@ app.post("/getSleepStats", (req, res) => {
     });
 });
 
-
-
-
-
 // function(s)
-function convert(minutes) { // convert minutes into HH:MM format
+function convert(minutes) {
+  // convert minutes into HH:MM format
   if (typeof minutes !== "number" || isNaN(minutes)) {
     return "00:00"; // Default value if minutes is not a valid number
   }
