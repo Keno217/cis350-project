@@ -1,6 +1,16 @@
 name: CI
 on: [push]
 jobs:
+  node_test:
+    name: Run node test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./server
+    steps:
+      - run: npm install
+      - run: npm test
+
   flutter_test:
     name: Run flutter test and analyze
     runs-on: ubuntu-latest
