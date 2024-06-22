@@ -4,11 +4,12 @@ import 'dart:convert';
 import 'package:sleepapp/global.dart';
 
 class Register extends StatefulWidget {
-  Register({super.key});
+  const Register({Key? key}) : super(key: key);
 
   @override
-  _RegisterState createState() => _RegisterState();
+  State<Register> createState() => _RegisterState();
 }
+
 
 class _RegisterState extends State<Register> {
   final TextEditingController _usernameController = TextEditingController();
@@ -17,14 +18,12 @@ class _RegisterState extends State<Register> {
 
   @override
   void dispose() {
-    // delete text controller when moving to different page for mem. leak
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void showMessage(BuildContext context, String message) {
-    // function to pop in http post
+  void _showErrorMessage(BuildContext context, String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -35,7 +34,6 @@ class _RegisterState extends State<Register> {
     String hashedPassword = hashPassword(password);
 
     var response = await http.post(
-      // create an account and hash the password before sending over the net
       Uri.parse('$server/createUser'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
@@ -135,25 +133,25 @@ class _RegisterState extends State<Register> {
                                   String username = _usernameController.text;
                                   String password = _passwordController.text;
                                   if (username.isEmpty) {
-                                    showMessage(context,
+                                    _showErrorMessage(context,
                                         'Username must be at least 1 character');
                                     return;
                                   }
 
                                   if (username.length > 12) {
-                                    showMessage(context,
+                                    _showErrorMessage(context,
                                         'Username must be less than 12 characters');
                                     return;
                                   }
 
                                   if (password.length < 3) {
-                                    showMessage(context,
+                                    _showErrorMessage(context,
                                         'Password must be at least 3 characters');
                                     return;
                                   }
 
                                   if (password.length > 12) {
-                                    showMessage(context,
+                                    _showErrorMessage(context,
                                         'Password must be less than 12 characters');
                                     return;
                                   }
@@ -170,18 +168,20 @@ class _RegisterState extends State<Register> {
                                   });
 
                                   if (response == 0) {
-                                    showMessage(
+                                    _showErrorMessage(
                                         context, 'Server connection error');
                                     return;
                                   }
 
                                   if (response == 1) {
-                                    showMessage(context, 'Account Created');
+                                    _showErrorMessage(
+                                        context, 'Account Created');
                                     return;
                                   }
 
                                   if (response == 2) {
-                                    showMessage(context, 'User already exists');
+                                    _showErrorMessage(
+                                        context, 'User already exists');
                                     return;
                                   }
                                 },

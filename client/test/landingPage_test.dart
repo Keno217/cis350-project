@@ -7,12 +7,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:sleepapp/pages/LandingPage.dart';
+import 'package:sleepapp/pages/landing_page.dart';
 
 void main() {
   testWidgets('Login Page Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MaterialApp(home:LandingPage()));
+    await tester.pumpWidget(const MaterialApp(home: LandingPage()));
 
     //check non varied text
     expect(find.text("Average Sleep : "), findsOneWidget);
@@ -35,7 +35,5 @@ void main() {
 
     //find dropdowns
     //final startDropdown = find.byKey(const ValueKey('dropdown'));
-
-
   });
 }
