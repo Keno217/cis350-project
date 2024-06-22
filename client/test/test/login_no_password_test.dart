@@ -12,23 +12,21 @@ import 'package:sleepapp/main.dart';
 void main() {
   testWidgets('Login Page Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-    
-    //Looks for Text
-    expect(find.text("Login"), findsOneWidget);
-    expect(find.text("Don't have an account? Create one"), findsOneWidget);
+    await tester.pumpWidget(MyApp());
 
     //sign in button
     var button = find.text("Sign In");
-    expect(button, findsOneWidget);
 
     //sign in with no password
     final username = find.ancestor(
       of: find.text('Username'),
       matching: find.byType(TextField)
     );
+
     await tester.enterText(username, "TestAcc");
     expect(find.text("TestAcc"), findsOneWidget);
-
+    await tester.tap(button);
+    await tester.pump();
+    expect(find.text("Password must be at least 3 characters"), findsOneWidget);
   });
 }
